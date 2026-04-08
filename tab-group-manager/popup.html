@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tab Groups</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="header">
+    <div class="header-row">
+      <h1>Tab Groups</h1>
+      <div class="search-wrapper">
+        <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input type="text" id="search-input" placeholder="Search groups or tabs..." autocomplete="off">
+      </div>
+    </div>
+    <div class="tabs">
+      <button class="tab active" data-tab="saved">Saved</button>
+      <button class="tab" data-tab="open">Open</button>
+      <button class="tab tab-icon" data-tab="settings" title="Settings">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="tab-panel active" id="panel-saved">
+    <div id="saved-groups" class="group-list">
+      <p class="empty-state">No saved groups yet</p>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="panel-open">
+    <div id="open-groups" class="group-list">
+      <p class="empty-state">No open tab groups</p>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="panel-settings">
+    <div class="settings-panel">
+      <label for="settings-data" class="settings-label">Saved Groups (JSON)</label>
+      <textarea id="settings-data" class="settings-textarea" spellcheck="false"></textarea>
+      <div class="settings-actions">
+        <span id="settings-status" class="settings-status"></span>
+        <button id="settings-save" class="btn settings-btn">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

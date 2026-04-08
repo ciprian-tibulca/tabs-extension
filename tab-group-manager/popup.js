@@ -89,7 +89,12 @@ function switchToTab(tabName) {
 function initTabs() {
   const tabButtons = document.querySelectorAll(".tab");
   tabButtons.forEach((btn) => {
-    btn.addEventListener("click", () => switchToTab(btn.dataset.tab));
+    btn.addEventListener("click", () => {
+      switchToTab(btn.dataset.tab);
+      if (btn.dataset.tab === "settings") {
+        loadSettingsData();
+      }
+    });
   });
 }
 
@@ -366,6 +371,43 @@ function escapeHtml(text) {
   return div.innerHTML;
 }
 
+// ─── Settings panel ──────────────────────────────────────────
+
+async function loadSettingsData() {
+  const textarea = document.getElementById("settings-data");
+  const result = await chrome.storage.local.get("savedGroups");
+  const data = result.savedGroups || {};
+  textarea.value = JSON.stringify(data, null, 2);
+}
+
+function initSettings() {
+  const saveBtn = document.getElementById("settings-save");
+  const textarea = document.getElementById("settings-data");
+  const status = document.getElementById("settings-status");
+
+  saveBtn.addEventListener("click", async () => {
+    status.textContent = "";
+    status.className = "settings-status";
+
+    try {
+      const parsed = JSON.parse(textarea.value);
+      await chrome.storage.local.set({ savedGroups: parsed });
+      status.textContent = "Saved";
+      status.className = "settings-status success";
+      // Re-render saved groups to reflect changes
+      await renderSavedGroups(currentSavedKey);
+    } catch (e) {
+      status.textContent = "Invalid JSON";
+      status.className = "settings-status error";
+    }
+
+    setTimeout(() => {
+      status.textContent = "";
+      status.className = "settings-status";
+    }, 2000);
+  });
+}
+
 // ─── State ───────────────────────────────────────────────────────
 
 let currentTabGroupId = null;
@@ -383,6 +425,7 @@ async function renderAll() {
 document.addEventListener("DOMContentLoaded", async () => {
   initTabs();
   initSearch();
+  initSettings();
 
   // Detect which group the current tab belongs to
   const info = await chrome.runtime.sendMessage({ action: "getCurrentTabGroup" });
