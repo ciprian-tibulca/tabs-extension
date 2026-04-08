@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "Tab Groups Auto-Save",
+  "version": "1.0.0",
+  "description": "Save and restore tab groups with automatic syncing. Any changes to saved groups are persisted automatically.",
+  "permissions": [
+    "tabGroups",
+    "tabs",
+    "storage"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}
